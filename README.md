@@ -1,25 +1,28 @@
 # Laravel Multi-Company API
 
-## Overview
-This project is a **Multi-Tenant Laravel API** that allows user registration, login, and management of multiple companies with active company switching.
+## Project Overview
+This is a Laravel-based multi-tenant API project where users can register, login, and manage multiple companies under their account. Users can switch between their active companies and perform operations scoped to the active company.
 
 ---
 
 ## Features
-- User Registration & Login (Sanctum Auth)
-- Company CRUD
-- Active Company selection
-- Data scoped per authenticated user
-- Simple HTML/CSS/JS frontend
+
+- User Authentication (Register, Login, Logout) using Laravel Sanctum.
+- Multi-Company management: Create, List, Update, Delete companies.
+- Active company switching via API.
+- Data isolation: Users can only access their own companies and data.
+- API endpoints protected with Sanctum authentication.
 
 ---
 
 ## Setup Instructions
 
 1. Clone the repository:
+
    ```bash
-   git clone https://github.com/<your-username>/laravel-multi-company-api.git
+   git clone https://github.com/your-username/laravel-multi-company-api.git
    cd laravel-multi-company-api
+
    ```
 
 2. Install dependencies:
