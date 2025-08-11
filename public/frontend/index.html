@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Company API Frontend</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Multi-Company API Test</h1>
+
+        <section>
+            <h2>Register</h2>
+            <form id="registerForm">
+                <input type="text" id="regName" placeholder="Name" required>
+                <input type="email" id="regEmail" placeholder="Email" required>
+                <input type="password" id="regPassword" placeholder="Password" required>
+                <input type="password" id="regPasswordConfirm" placeholder="Confirm Password" required>
+                <button type="submit">Register</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Companies</h2>
+            <form id="companyForm">
+                <input type="text" id="companyName" placeholder="Company Name" required>
+                <input type="text" id="companyAddress" placeholder="Address" required>
+                <input type="text" id="companyIndustry" placeholder="Industry" required>
+                <button type="submit">Create Company</button>
+            </form>
+            <div id="companyList"></div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
