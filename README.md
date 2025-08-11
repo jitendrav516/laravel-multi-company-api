@@ -1,121 +1,94 @@
+# Laravel Multi-Company API
 
-# Laravel Multi-Company (Multi-Tenant) API
+## Overview
+This project is a **Multi-Tenant Laravel API** that allows user registration, login, and management of multiple companies with active company switching.
 
-This project is a Laravel-based REST API for managing multiple companies under a single user account with multi-tenant data isolation.
+---
 
 ## Features
+- User Registration & Login (Sanctum Auth)
+- Company CRUD
+- Active Company selection
+- Data scoped per authenticated user
+- Simple HTML/CSS/JS frontend
 
-- User registration, login, and logout (Laravel Sanctum authentication)
-- CRUD operations for companies
-- Multi-tenant logic ensuring each user can only access their own companies
-- Ability to set and switch the active company for the user
-- Data scoping based on active company
-- MySQL database with Eloquent ORM
-- Validation & error handling
+---
 
-## Requirements
+## Setup Instructions
 
-- PHP 8.1+
-- Composer
-- MySQL
-- Laravel 10+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/<your-username>/laravel-multi-company-api.git
+   cd laravel-multi-company-api
+   ```
 
-## Installation
+2. Install dependencies:
+   ```bash
+   composer install
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-1. **Clone the repository**
-    ```bash
-    git clone https://github.com/<your-username>/laravel-multi-company-api.git
-    cd laravel-multi-company-api
-    ```
+3. Setup database in `.env` and run migrations:
+   ```bash
+   php artisan migrate
+   ```
 
-2. **Install dependencies**
-    ```bash
-    composer install
-    ```
+4. Serve the application:
+   ```bash
+   php artisan serve
+   ```
 
-3. **Copy environment file**
-    ```bash
-    cp .env.example .env
-    ```
-
-4. **Set up environment variables** in `.env`
-    ```env
-    DB_CONNECTION=mysql
-    DB_HOST=127.0.0.1
-    DB_PORT=3306
-    DB_DATABASE=multi_company_db
-    DB_USERNAME=root
-    DB_PASSWORD=
-    ```
-
-5. **Generate application key**
-    ```bash
-    php artisan key:generate
-    ```
-
-6. **Run migrations**
-    ```bash
-    php artisan migrate
-    ```
-
-7. **Serve the application**
-    ```bash
-    php artisan serve
-    ```
+---
 
 ## API Endpoints
 
-### Authentication
-- **Register**  
-  `POST /api/register`  
-  ```json
-  {
-    "name": "Test User",
-    "email": "test@example.com",
-    "password": "password",
-    "password_confirmation": "password"
-  }
-  ```
+### Auth
+| Method | Endpoint       | Description         |
+|--------|---------------|---------------------|
+| POST   | `/api/register`| Register user       |
+| POST   | `/api/login`   | Login user          |
+| POST   | `/api/logout`  | Logout user         |
 
-- **Login**  
-  `POST /api/login`  
-  ```json
-  {
-    "email": "test@example.com",
-    "password": "password"
-  }
-  ```
+### Company
+| Method | Endpoint         | Description         |
+|--------|-----------------|---------------------|
+| GET    | `/api/companies`| List companies      |
+| POST   | `/api/companies`| Create company      |
+| GET    | `/api/companies/{id}`| Show company   |
+| PUT    | `/api/companies/{id}`| Update company |
+| DELETE | `/api/companies/{id}`| Delete company |
 
-- **Logout**  
-  `POST /api/logout` (Requires Auth)
+---
 
-### Companies
-- **List Companies**: `GET /api/companies`  
-- **Create Company**: `POST /api/companies`  
-  ```json
-  {
-    "name": "My Company",
-    "address": "123 Street",
-    "industry": "IT"
-  }
-  ```
-- **Update Company**: `PUT /api/companies/{id}`  
-- **Delete Company**: `DELETE /api/companies/{id}`  
+## Multi-Tenant Logic
+- Each user has their own companies.
+- `companies` table is scoped by `user_id`.
+- Active company is stored in a separate table and linked to user.
 
-### Active Company
-- **Set Active Company**: `POST /api/companies/active`  
-  ```json
-  {
-    "company_id": 1
-  }
-  ```
+---
 
-## Multi-Tenant Logic & Data Scoping
+## Frontend (HTML/CSS/JS)
 
-- Every company is linked to a specific user via `user_id`.
-- Users can **only** access their own companies (authorization checks in controllers).
-- Active company is tracked per user (either in `users` table or separate `user_active_companies` table).
-- All future modules (e.g., invoices, projects) will be scoped to the active company.
+A simple static frontend is included in **`public/frontend`**.  
+You can open it directly in the browser after running Laravel:
 
-## License
-This project is open-source and available under the [MIT license](LICENSE).
+```
+http://127.0.0.1:8000/frontend/index.html
+```
+
+The frontend interacts with the Laravel API via AJAX (fetch API).
+
+---
+
+## Example Requests
+
+### Register
+```bash
+curl --location 'http://127.0.0.1:8000/api/register' --header 'Content-Type: application/json' --data '{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "password",
+  "password_confirmation": "password"
+}'
+```
